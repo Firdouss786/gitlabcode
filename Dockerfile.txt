@@ -1,0 +1,30 @@
+FROM ruby:2.6.3
+
+RUN apt-get update -qq 
+RUN apt-get install -y build-essential libpq-dev nodejs
+
+
+RUN mkdir /fireflyapp
+WORKDIR /fireflyapp
+
+ADD Gemfile /fireflyapp/Gemfile
+ADD Gemfile.lock /fireflyapp/Gemfile.lock
+
+
+RUN  bundle install
+
+ADD . /fireflyapp
+
+EXPOSE 3000
+
+CMD ["bundle","exec","rails","server","-b", "0.0.0.0"]
+#ENV DB_USER=iseBite
+#ENV DB_PORT=3306
+#ENV DB_PASSWORD=ise@BitE11#
+#ENV DB_HOST=18.144.43.199
+
+VOLUME .:/fireflyapp
+
+
+
+
